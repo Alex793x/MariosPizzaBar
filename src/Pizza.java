@@ -1,5 +1,5 @@
 public enum Pizza {
-    VESUVIO("Vesuvio","tomatsauce, ost, skinge og oregano" ,57),
+    VESUVIO("Vesuvio","tomatsauce, ost, skinke og oregano" ,57),
     AMERIKANER("Amerikaner","tomatsauce, ost, oksefars og oregano",53),
     CACCIATORE("Cacciatore","tomatsauce, ost, peporoni og oregano",57),
     CARBONA("Carbona","tomatsauce, ost, kødsauce, spaghetti, cocktailpølser og oregano",63),
@@ -20,10 +20,11 @@ public enum Pizza {
     private final String pizzaIngriedients;
     private final int pizzaPrice;
 
-
-    //GETTERS------------------------------------
-    public String getPizzaName() {
-        return pizzaName;
+    //Constructor --------------------------------
+    Pizza(String pizzaName, String pizzaIngriedients, int pizzaPrice) {
+        this.pizzaName = pizzaName;
+        this.pizzaIngriedients = pizzaIngriedients;
+        this.pizzaPrice = pizzaPrice;
     }
 
     public String getPizzaIngriedients() {
@@ -34,10 +35,9 @@ public enum Pizza {
         return pizzaPrice;
     }
 
-    Pizza(String pizzaName, String pizzaIngriedients, int pizzaPrice) {
-        this.pizzaName = pizzaName;
-        this.pizzaIngriedients = pizzaIngriedients;
-        this.pizzaPrice = pizzaPrice;
-    }
 
+    @Override
+    public String toString() {
+        return pizzaName + " - Med " + pizzaIngriedients;
+    }
 }

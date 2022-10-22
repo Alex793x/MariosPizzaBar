@@ -2,6 +2,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+
 public class PersonOrder {
     private static int uniqueID = 1;
     private int id = uniqueID++;
@@ -25,10 +27,6 @@ public class PersonOrder {
         return name;
     }
 
-    protected String getPhoneNumber() {
-        return phoneNumber;
-    }
-
     protected Pizza getPizzaChoice() {
         return pizzaChoice;
     }
@@ -50,20 +48,17 @@ public class PersonOrder {
     }
 
     //SETTER -----------------------
-    protected void setId() {
-        this.id = uniqueID++;
-    }
-    protected void setName() {
-        this.name = Controller.in.nextLine();
+    protected void setName(Controller ui) {
+        this.name = ui.in.nextLine();
     }
 
-    protected void setPhoneNumber() {
-        this.phoneNumber = Controller.in.nextLine();
+    protected void setPhoneNumber(Controller ui) {
+        this.phoneNumber = ui.in.nextLine();
     }
 
-    protected void setPizzaChoice() {
-        this.pizzaChoice = Pizza.values()[Controller.in.nextInt() - 1];
-        Controller.in.nextLine();
+    protected void setPizzaChoice(Controller ui) {
+        this.pizzaChoice = Pizza.values()[ui.in.nextInt() - 1];
+        ui.in.nextLine();
     }
 
     protected void setPaid() {
@@ -71,13 +66,13 @@ public class PersonOrder {
     }
 
     //Constructor ----------------------
-    PersonOrder() {
+    PersonOrder(Controller ui) {
         System.out.print("Who is ordering: ");
-        setName();
+        setName(ui);
         System.out.print("Phone number on customer: ");
-        setPhoneNumber();
+        setPhoneNumber(ui);
         System.out.print("Which pizza: ");
-        setPizzaChoice();
+        setPizzaChoice(ui);
         orderList.add(pizzaChoice);
     }
 

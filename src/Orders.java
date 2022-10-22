@@ -9,6 +9,10 @@ public class Orders implements Comparable<PersonOrder> {
     private LocalDateTime orderTime = LocalDateTime.now();
 
 
+    // CONSTRUCTOR ---------------------------------------------
+    public Orders() {
+    }
+
 
     //GETTER ---------------------------------------------------
     protected ArrayList<PersonOrder> getActiveOrders() {
@@ -19,31 +23,72 @@ public class Orders implements Comparable<PersonOrder> {
         return (ArrayList<PersonOrder>) finishedOrders;
     }
 
-    public LocalDateTime getDateTime() {
+    private LocalDateTime getDateTime() {
         return orderTime;
     }
 
+    // Behaviors (Methods) -------------------------------------
 
-    // CONSTRUCTOR ---------------------------------------------
-    public Orders() {
+    protected void addOrder(Controller ui) {
+        try {
+            activeOrders.add(new PersonOrder(ui)); // Add a person with order to active list.
+        }
+        catch (Exception e) {
+            System.out.println("Noget gik galt, prøv venligst igen fra start");
+            ui.in.nextLine();
+            addOrder(ui);
+        }
     }
 
-    protected void printActiveOrders() {
+    protected void deleteOrder(Controller ui) {
+        System.out.print("Hvem vil gerne have sin ordre slettet?: ");
+        for (int i = 0; i < activeOrders.size(); i++) {
+            if (ui.in.nextLine().equals(activeOrders.get(i).getName())) {
+                activeOrders.remove(i); // Delete order from active list
+            } else {
+                System.out.print("Navn findes ikke på listen, vil du prøve indtaste igen? - y/n ");
+                if (ui.in.nextLine().equals("y")) {
+                    deleteOrder(ui);
+                }
+                break;
+            }
+        }
+    }
+
+    protected void finishOrder(Controller ui) {
+        System.out.print("Hvilken kunde har fået udleveret sin ordre?: ");
+
+        for (int i = 0; i < activeOrders.size(); i++) {
+            if (ui.in.nextLine().equals(activeOrders.get(i).getName())) {
+                activeOrders.get(i).setPaid();      // Set payment to equal true
+                finishedOrders.add(activeOrders.get(i));    //move from active to finished list
+                activeOrders.remove(i); // Remove order from active order list.
+            } else {
+                System.out.print("Navn findes ikke på listen, vil du prøve at indtaste igen? - y/n ");
+                if (ui.in.nextLine().equals("y")) {
+                    finishOrder(ui);
+                }
+                break;
+            }
+        }
+    }
+
+    protected void printActiveOrderList() {
         for (PersonOrder personOrder : activeOrders) {
-            System.out.printf("\nOrder ID: " + personOrder.getId() + "\nName on customer: " + personOrder.getName() +
-                    " - Ordered " + personOrder.getPizzaChoice() + " at " + personOrder.getOrderTime() +
-                    "\nPrice: " + personOrder.getPizzaChoice().getPizzaPrice() +
-                    " - Paid Status: " + personOrder.isPaid() +
+            System.out.printf("\nOrdre ID: " + personOrder.getId() + "\nNavn på kunde: " + personOrder.getName() +
+                    " - Bestilt " + personOrder.getPizzaChoice() + " klokken " + personOrder.getOrderTime() +
+                    "\nPris: " + personOrder.getPizzaChoice().getPizzaPrice() +
+                    " - Betalt: " + personOrder.isPaid() +
                     "%n--------------------------------------%n");
         }
     }
 
-    protected void printFinsihedOrders() {
+    protected void printFinsihedOrderList() {
         for (PersonOrder personOrder : finishedOrders) {
-            System.out.printf("%nOrder ID: " + personOrder.getId() + "\nName on customer: " + personOrder.getName() +
-                    " - Ordered " + personOrder.getPizzaChoice() + " at " + personOrder.getOrderTime() +
-                    "\nPrice: " + personOrder.getPizzaChoice().getPizzaPrice() +
-                    " - Paid Status: " + personOrder.isPaid() +
+            System.out.printf("%Ordre ID: " + personOrder.getId() + "\nNavn på kunde: " + personOrder.getName() +
+                    " - Bestilt " + personOrder.getPizzaChoice() + " klokken " + personOrder.getOrderTime() +
+                    "\nPris: " + personOrder.getPizzaChoice().getPizzaPrice() +
+                    " - Betalt: " + personOrder.isPaid() +
                     "%n--------------------------------------%n");
         }
     }
