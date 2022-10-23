@@ -1,23 +1,17 @@
 public class Main {
-    static Controller ui = new Controller();
-    static Orders orders = new Orders();
-    static PizzaMenu mariosMenu = new PizzaMenu();
+    Controller controller = new Controller();
 
-    private void run(PizzaMenu mariosMenu, Controller ui, Orders orders) {
+    private void run() {
         System.out.println("------------------------------------------");
         System.out.println("|                                        |");
         System.out.println("|     VELKOMMEN TIL MARIOS PIZZA BAR     |");
         System.out.println("|                                        |");
         System.out.println("------------------------------------------");
 
-        do {
-            System.out.println(ui.toString());
-            ui.menuController(mariosMenu, ui, orders);
-        } while (ui.isRunning);
+        controller.menuController();
 
     }
-
     public static void main(String[] args) {
-        new Main().run(mariosMenu, ui, orders);
+        new Main().run();
     }
 }

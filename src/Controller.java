@@ -1,79 +1,103 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Controller {
 
     // Utility ------------------------------------
-    protected Scanner in = new Scanner(System.in);
+    protected static Scanner in = new Scanner(System.in);
+    private Orders orders = new Orders();
+    private PizzaMenu mariosMenu = new PizzaMenu();
 
     // Attributes ----------------------------------
     private final String[] menuOptions = {"1: Print Menu" , "2: Tilføj Ordre", "3: Fjern Ordre",
-            "4: Afslut Ordre", "5: Se aktive ordre", "6: Se næste ordre", "6: Tæl kassen op", "9: Afslut program"};
+            "4: Afslut Ordre", "5: Se aktive ordre", "6: Se næste ordre", "7: Print afsluttede ordre",
+            "8: Tæl kassen op" ,"9: Afslut program"};
 
     protected boolean isRunning = true;
 
 
 
     // MENU CONTROLLER -----------------------------
-    protected void menuController(PizzaMenu mariosMenu, Controller ui, Orders orders) {
+    protected void menuController() {
+        while(isRunning) {
+            System.out.println("\n" + this);
 
-        switch (in.nextInt()) {
+            switch (in.nextInt()) {
                 case 1:
-                    viewMariosPizzaMenu(mariosMenu);
+                    viewMariosPizzaMenu();
                     break;
                 case 2:
                     in.nextLine();
-                    makeAnOrder(ui,orders);
+                    makeAnOrder();
                     break;
                 case 3:
                     in.nextLine();
-                    deleteAnOrder(ui, orders);
+                    deleteAnOrder();
                     break;
                 case 4:
                     in.nextLine();
-                    finishAnOrder(ui, orders);
+                    finishAnOrder();
                     break;
                 case 5:
-                    viewAllOrders(orders);
+                    viewAllActiveOrders();
                     break;
                 case 6:
-                    viewNextOrder(orders);
+                    viewNextOrder();
+                    break;
+                case 7:
+                    viewFinsihedOrders();
+
+                    break;
+                case 8:
+                    viewTurnOver();
                     break;
                 case 9:
-                    this.isRunning = false;
-                default:
-                    System.out.println("Indtastning fokert - Prøv igen");
-                    menuController(mariosMenu,ui,orders);
+                    isRunning = false;
+            }
         }
     }
 
     //Behavior (Methods) ---------------------------
-    protected void viewMariosPizzaMenu(PizzaMenu mariosMenu) {
+    protected void viewMariosPizzaMenu() {
         mariosMenu.printMenu();
     }
-    protected void makeAnOrder(Controller ui, Orders orders) {
-        orders.addOrder(ui);
+    protected void makeAnOrder() {
+        orders.addOrder();
     }
 
-    protected  void deleteAnOrder(Controller ui, Orders orders) {
-        orders.deleteOrder(ui);
+    protected  void deleteAnOrder() {
+        orders.deleteOrder();
     }
 
-    protected void finishAnOrder(Controller ui, Orders orders) {
-        orders.finishOrder(ui);
+    protected void finishAnOrder() {
+        orders.finishOrder();
     }
 
-    protected void viewAllOrders(Orders orders) {
+    protected void viewAllActiveOrders() {
         orders.printActiveOrderList();
     }
 
-    protected void viewNextOrder(Orders orders) {
-        System.out.println("\nTil " + orders.getActiveOrders().get(orders.getActiveOrders().size()-1).getName()
-                + ": " + orders.getActiveOrders().get(orders.getActiveOrders().size() - 1).getOrderList());
+    protected void viewFinsihedOrders() {
+        orders.printFinsihedOrderList();
+    }
+
+    protected void viewTurnOver() {
+        System.out.println("Total omsætning baseret på afsluttede ordre er: " + orders.turnOver() + ",- kroner");
+    }
+
+    protected void viewNextOrder() {
+        if (orders.getActiveOrders().size() > 0) {
+            System.out.println("\nTil " + orders.getActiveOrders().get(orders.getActiveOrders().size()-1).getName()
+                    + ": " + orders.getActiveOrders().get(orders.getActiveOrders().size() - 1).getOrderList());
+        } else {
+            System.out.println("\nIngen ordrer venter på at blive lavet!");
+        }
     }
 
     @Override
     public String toString() {
         return menuOptions[0] + "\n" + menuOptions[1] + "\n" + menuOptions[2] + "\n" + menuOptions[3] +
-                "\n" + menuOptions[4] + "\n" + menuOptions [5] + "\n" + menuOptions[6] + "\n" + menuOptions[7];
+                "\n" + menuOptions[4] + "\n" + menuOptions [5] + "\n" + menuOptions[6] + "\n" + menuOptions[7] +
+                "\n" + menuOptions[8];
     }
 }

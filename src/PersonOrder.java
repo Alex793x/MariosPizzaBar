@@ -48,17 +48,17 @@ public class PersonOrder {
     }
 
     //SETTER -----------------------
-    protected void setName(Controller ui) {
-        this.name = ui.in.nextLine();
+    protected void setName() {
+        this.name = Controller.in.nextLine();
     }
 
-    protected void setPhoneNumber(Controller ui) {
-        this.phoneNumber = ui.in.nextLine();
+    protected void setPhoneNumber() {
+        this.phoneNumber = Controller.in.nextLine();
     }
 
-    protected void setPizzaChoice(Controller ui) {
-        this.pizzaChoice = Pizza.values()[ui.in.nextInt() - 1];
-        ui.in.nextLine();
+    protected void setPizzaChoice() {
+        this.pizzaChoice = Pizza.values()[Controller.in.nextInt() - 1];
+        Controller.in.nextLine();
     }
 
     protected void setPaid() {
@@ -66,13 +66,13 @@ public class PersonOrder {
     }
 
     //Constructor ----------------------
-    PersonOrder(Controller ui) {
+    PersonOrder() {
         System.out.print("Who is ordering: ");
-        setName(ui);
+        setName();
         System.out.print("Phone number on customer: ");
-        setPhoneNumber(ui);
+        setPhoneNumber();
         System.out.print("Which pizza: ");
-        setPizzaChoice(ui);
+        setPizzaChoice();
         orderList.add(pizzaChoice);
     }
 
