@@ -8,7 +8,7 @@ public class Controller {
     private PizzaMenu mariosMenu = new PizzaMenu();
 
     // Attributes ----------------------------------
-    private final String[] menuOptions = {"1: Print Menu" , "2: Tilføj Ordre", "3: Fjern Ordre",
+    protected final String[] menuOptions = {"1: Print Menu" , "2: Tilføj Ordre", "3: Fjern Ordre",
             "4: Afslut Ordre", "5: Se aktive ordre", "6: Se næste ordre", "7: Print afsluttede ordre",
             "8: Tæl kassen op" ,"9: Afslut program"};
 
@@ -68,7 +68,7 @@ public class Controller {
         orders.printFinsihedOrderList();
     }
 
-    protected  void viewNextOrder() {
+    protected void viewNextOrder() {
         orders.viewNextOrder();
     }
 

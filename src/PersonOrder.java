@@ -18,6 +18,12 @@ public class PersonOrder {
 
     private final String formatOrderTime = orderTime.format(formatter);
 
+    //Constructor ----------------------
+    PersonOrder() {
+        setName();
+        setPhoneNumber();
+        setPizzaChoice();
+    }
 
     //GETTER ----------------------
     protected  int getId() {
@@ -43,38 +49,43 @@ public class PersonOrder {
         return formatOrderTime;
     }
 
-    protected LocalDateTime orderTime() {
-        return orderTime;
-    }
-
     //SETTER -----------------------
     protected void setName() {
+        System.out.print("Who is ordering: ");
         this.name = Controller.in.nextLine();
     }
 
     protected void setPhoneNumber() {
+        System.out.print("Phone number on customer: ");
         this.phoneNumber = Controller.in.nextLine();
     }
 
-    protected void setPizzaChoice() {
-        this.pizzaChoice = Pizza.values()[Controller.in.nextInt() - 1];
-        Controller.in.nextLine();
-    }
 
     protected void setPaid() {
         this.paid = true;
     }
 
-    //Constructor ----------------------
-    PersonOrder() {
-        System.out.print("Who is ordering: ");
-        setName();
-        System.out.print("Phone number on customer: ");
-        setPhoneNumber();
-        System.out.print("Which pizza: ");
-        setPizzaChoice();
-        orderList.add(pizzaChoice);
+
+    // Behavior (Methods) -----------------------------------
+
+    protected void setPizzaChoice() {
+        System.out.print("Which pizza?: ");
+        pizzaChoice = Pizza.values()[Controller.in.nextInt() - 1];    // Choose pizza based on ordinal enum position
+        orderList.add(pizzaChoice);                                   // Add pizza to persons Order list.
+
+        Controller.in.nextLine();           //Scanner bug
+
+        System.out.println("Do the customer wants another pizza?: y/n");
+        if (Controller.in.nextLine().equalsIgnoreCase("y")) {
+            setPizzaChoice();               // Recursive method to add new pizza
+        } else {
+            System.out.println((orderList.size() > 1) ? "Pizzas " : "Pizza ");
+            System.out.println("added! to " + name +
+                    ((name.substring(name.length() - 1)).equals("s") ? " list" : "'s list"));
+        }
     }
+
+
 
     @Override
     public String toString() {
