@@ -51,12 +51,12 @@ public class PersonOrder {
 
     //SETTER -----------------------
     protected void setName() {
-        System.out.print("Who is ordering: ");
+        System.out.print("Hvem vil gerne bestille?: ");
         this.name = Controller.in.nextLine();
     }
 
     protected void setPhoneNumber() {
-        System.out.print("Phone number on customer: ");
+        System.out.print("Hvad er telefon nummer på kunde: ");
         this.phoneNumber = Controller.in.nextLine();
     }
 
@@ -69,32 +69,19 @@ public class PersonOrder {
     // Behavior (Methods) -----------------------------------
 
     protected void setPizzaChoice() {
-        System.out.print("Which pizza?: ");
+        System.out.print("Hvilken pizza?: ");
         pizzaChoice = Pizza.values()[Controller.in.nextInt() - 1];    // Choose pizza based on ordinal enum position
         orderList.add(pizzaChoice);                                   // Add pizza to persons Order list.
 
         Controller.in.nextLine();           //Scanner bug
 
-        System.out.println("Do the customer wants another pizza?: y/n");
+        System.out.println("Ønsker kunden en pizza mere?: y/n");
         if (Controller.in.nextLine().equalsIgnoreCase("y")) {
             setPizzaChoice();               // Recursive method to add new pizza
         } else {
             System.out.println((orderList.size() > 1) ? "Pizzas " : "Pizza ");
-            System.out.println("added! to " + name +
-                    ((name.substring(name.length() - 1)).equals("s") ? " list" : "'s list"));
+            System.out.println("Tilføjet til " + name +
+                    ((name.substring(name.length() - 1)).equals("s") ? " ordre" : "'s ordre"));
         }
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "\nNext Order: " +
-                "\nOrder ID: " + id +
-                "\nName on customer: " + name +
-                "\nOrdered " + pizzaChoice +
-                "\nPrice: " + pizzaChoice.getPizzaPrice() +
-                " - Paid Status: " + isPaid() +
-                "\n--------------------------------------\n";
     }
 }

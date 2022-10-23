@@ -9,7 +9,7 @@ public class Controller {
 
     // Attributes ----------------------------------
     protected final String[] menuOptions = {"1: Print Menu" , "2: Tilføj Ordre", "3: Fjern Ordre",
-            "4: Afslut Ordre", "5: Se aktive ordre", "6: Se næste ordre", "7: Print afsluttede ordre",
+            "4: Afslut Ordre", "5: Se næste ordre", "6: Se alle aktive ordre", "7: Se alle afsluttede ordre",
             "8: Tæl kassen op" ,"9: Afslut program"};
 
     protected boolean isRunning = true;
@@ -35,8 +35,8 @@ public class Controller {
                     in.nextLine();      // Scanner Bug
                     finishAnOrder();
                 }
-                case 5 -> viewAllActiveOrders();
-                case 6 -> viewNextOrder();
+                case 5 -> viewNextOrder();
+                case 6 -> viewAllActiveOrders();
                 case 7 -> viewFinsihedOrders();
                 case 8 -> viewTurnOver();
                 case 9 -> isRunning = false;
@@ -73,7 +73,10 @@ public class Controller {
     }
 
     protected void viewTurnOver() {
-        System.out.println("Total omsætning baseret på afsluttede ordre er: " + orders.turnOver() + "0,- Kroner");
+        System.out.println();
+        System.out.println("  -----------------------------------------------------------------------");
+        System.out.println("| Total omsætning baseret på alle afsluttede ordre er: " + orders.turnOver() + "0,- Kroner  |");
+        System.out.println("  -----------------------------------------------------------------------");
     }
 
 

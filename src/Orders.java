@@ -51,9 +51,12 @@ public class Orders {
     protected void viewNextOrder() {
         if (activeOrders.size() > 0) {
 
+            // Finding the last order added to the active list by subtracting one from the length of the list
             System.out.printf("%nOrdre ID: " + activeOrders.get(activeOrders.size()-1).getId() + "%nNavn på kunde: " +
                     activeOrders.get(activeOrders.size()-1).getName() +
                     "%n%nBestilt: %n--------------------------------------");
+
+            // Iterating through all possible orders that person might have of pizzas.
             for (int j = 0; j < activeOrders.get(activeOrders.size()-1).getOrderList().size(); j++) {
                 System.out.printf("%n"+ activeOrders.get(activeOrders.size()-1).getOrderList().get(j));
             }
@@ -61,6 +64,8 @@ public class Orders {
                     totalOrderListPrice(activeOrders.get(activeOrders.size()-1)) +
                     "%nBetalt: " + activeOrders.get(activeOrders.size()-1).isPaid() +
                     "%n--------------------------------------%n");
+
+            // If no pizzas or orderes are present, print no order -----
         } else {
             System.out.println("\nIngen ordrer venter på at blive lavet!");
         }
@@ -93,17 +98,21 @@ public class Orders {
     }
 
     protected void orderPrint(List<PersonOrder> activeOrders) {
+
+        //Iterate through each person who made an order and print individual.
         for (int i = 0; i < activeOrders.size(); i++) {
             System.out.printf("%nOrdre ID: " + activeOrders.get(i).getId() + "%nNavn på kunde: " +
                     activeOrders.get(i).getName() + "%n%nBestilt: %n--------------------------------------");
+
+            // Iterate through each pizza that person ordered and print each pizza
             for (int j = 0; j < activeOrders.get(i).getOrderList().size(); j++) {
                 System.out.printf("%n"+ activeOrders.get(i).getOrderList().get(j));
             }
+
             System.out.printf("%n%nKlokken " + activeOrders.get(i).getOrderTime() + "%nTotal pris: " +
                     totalOrderListPrice(activeOrders.get(i)) +
                     "%nBetalt: " + activeOrders.get(i).isPaid() +
                     "%n--------------------------------------%n");
         }
     }
-
 }
