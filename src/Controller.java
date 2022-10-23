@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Controller {
@@ -23,36 +22,24 @@ public class Controller {
             System.out.println("\n" + this);
 
             switch (in.nextInt()) {
-                case 1:
-                    viewMariosPizzaMenu();
-                    break;
-                case 2:
-                    in.nextLine();
+                case 1 -> viewMariosPizzaMenu();
+                case 2 -> {
+                    in.nextLine();      // Scanner Bug
                     makeAnOrder();
-                    break;
-                case 3:
-                    in.nextLine();
+                }
+                case 3 -> {
+                    in.nextLine();      // Scanner Bug
                     deleteAnOrder();
-                    break;
-                case 4:
-                    in.nextLine();
+                }
+                case 4 -> {
+                    in.nextLine();      // Scanner Bug
                     finishAnOrder();
-                    break;
-                case 5:
-                    viewAllActiveOrders();
-                    break;
-                case 6:
-                    viewNextOrder();
-                    break;
-                case 7:
-                    viewFinsihedOrders();
-
-                    break;
-                case 8:
-                    viewTurnOver();
-                    break;
-                case 9:
-                    isRunning = false;
+                }
+                case 5 -> viewAllActiveOrders();
+                case 6 -> viewNextOrder();
+                case 7 -> viewFinsihedOrders();
+                case 8 -> viewTurnOver();
+                case 9 -> isRunning = false;
             }
         }
     }
@@ -81,18 +68,15 @@ public class Controller {
         orders.printFinsihedOrderList();
     }
 
-    protected void viewTurnOver() {
-        System.out.println("Total omsætning baseret på afsluttede ordre er: " + orders.turnOver() + ",- kroner");
+    protected  void viewNextOrder() {
+        orders.viewNextOrder();
     }
 
-    protected void viewNextOrder() {
-        if (orders.getActiveOrders().size() > 0) {
-            System.out.println("\nTil " + orders.getActiveOrders().get(orders.getActiveOrders().size()-1).getName()
-                    + ": " + orders.getActiveOrders().get(orders.getActiveOrders().size() - 1).getOrderList());
-        } else {
-            System.out.println("\nIngen ordrer venter på at blive lavet!");
-        }
+    protected void viewTurnOver() {
+        System.out.println("Total omsætning baseret på afsluttede ordre er: " + orders.turnOver() + "0,- Kroner");
     }
+
+
 
     @Override
     public String toString() {

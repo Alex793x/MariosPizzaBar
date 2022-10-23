@@ -12,13 +12,6 @@ public class Orders {
     public Orders() {
     }
 
-    //GETTER ---------------------------------------------------
-    protected ArrayList<PersonOrder> getActiveOrders() {
-        return (ArrayList<PersonOrder>) activeOrders;
-    }    protected ArrayList<PersonOrder> getFinishedOrders() {
-        return (ArrayList<PersonOrder>) finishedOrders;
-    }
-
     // Behaviors (Methods) -------------------------------------
 
     protected void addOrder() {
@@ -45,7 +38,7 @@ public class Orders {
         System.out.print("\nHvilken kunde har fået udleveret sin ordre?: ");
         String input = Controller.in.nextLine();
 
-        for(Iterator<PersonOrder> i = getActiveOrders().iterator(); i.hasNext();) {
+        for(Iterator<PersonOrder> i = activeOrders.iterator(); i.hasNext();) {
             PersonOrder personOrder = i.next();
 
             if (personOrder.getName().equals(input)) {
@@ -55,11 +48,19 @@ public class Orders {
             }
         }
     }
+    protected void viewNextOrder() {
+        if (activeOrders.size() > 0) {
+            System.out.println("\nTil " + activeOrders.get(activeOrders.size()-1).getName()
+                    + ": " + activeOrders.get(activeOrders.size() - 1).getOrderList());
+        } else {
+            System.out.println("\nIngen ordrer venter på at blive lavet!");
+        }
+    }
 
     protected double turnOver() {
         double totalTurnOver = 0;
-        for (int i = 0; i < finishedOrders.size(); i++) {
-            totalTurnOver += finishedOrders.get(i).getPizzaChoice().getPizzaPrice();
+        for (PersonOrder finishedOrder : finishedOrders) {
+            totalTurnOver += finishedOrder.getPizzaChoice().getPizzaPrice();
         }
         return totalTurnOver;
     }
